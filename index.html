@@ -1,0 +1,36 @@
+<html>
+    <style>
+        body {
+            background-color: rgb(0, 0, 82);
+        }
+        div {
+            border: 1px solid white;
+            position: absolute;
+        }
+    </style>
+    <script src="https://firebasestorage.googleapis.com/v0/b/threeutil.appspot.com/o/helper.js?alt=media"></script>
+    <body>
+        hoge
+    </body>
+    <script>
+        var g = {};
+        g.divs = [];
+        function createBox() {
+            let d = createDom("div");
+            d.style.width = "100px";
+            d.style.height = "100px";
+            document.body.append(d);
+            d.resize = function (w, h) {
+                d.style.width = w + "px";
+                d.style.height = h + "px";
+            }
+            g.divs.push(d);
+            return d;
+        }
+        function init() {
+            let d = createBox();
+            d.resize(320, 860);
+        }
+        init();
+    </script>
+</html>
