@@ -7,29 +7,69 @@
             border: 1px solid white;
             position: absolute;
         }
+        p {
+            color: white;
+            margin: -10 -10;
+            font-family: 'Courier New', Courier, monospace;
+            position: absolute;
+        }
     </style>
-    <script src="https://firebasestorage.googleapis.com/v0/b/threeutil.appspot.com/o/helper.js?alt=media"></script>
     <body>
         hoge
     </body>
+    <script>
+        function createDom(t) {
+            return document.createElement(t);
+        }
+        function addDom(d, t=null) {
+            if (!t) t = document.body;
+            t.append(d);
+        }
+        function pin(a) {
+            return parseInt(a);
+        }
+    </script>
     <script>
         var g = {};
         g.divs = [];
         function createBox() {
             let d = createDom("div");
-            d.style.width = "100px";
-            d.style.height = "100px";
-            document.body.append(d);
+            let ttag = createDom("p");
+            let ltag = createDom("p");
+            ttag.style.transform = "rotate(0deg)";
+            ltag.style.transform = "rotate(90deg)";
+            d.width = e => {return parseInt(d.style.width)};
+            d.height = e => {return parseInt(d.style.height)};
+            d.top = e => {return parseInt(d.style.left)};
+            d.left = e => {return parseInt(d.style.top)};
             d.resize = function (w, h) {
                 d.style.width = w + "px";
                 d.style.height = h + "px";
+                ttag.innerText = w;
+                ltag.innerText = h;
+                d.updateTags();
             }
+            d.posi = function (x, y) {
+                d.style.left = x + "px";
+                d.style.top = y + "px";
+                d.updateTags();
+            }
+            d.updateTags = function() {
+                ttag.style.top = d.top();
+                ttag.style.left = d.left() + d.width() / 2;
+                ltag.style.top = d.top() + d.height() / 2;
+                ltag.style.left = d.left() + d.width();
+            }
+            document.body.append(d);
+            document.body.append(ttag);
+            document.body.append(ltag);
             g.divs.push(d);
             return d;
         }
         function init() {
             let d = createBox();
             d.resize(320, 860);
+            d.posi(100, 100);
         }
         init();
     </script>
