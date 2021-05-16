@@ -4,18 +4,20 @@
             background-color: rgb(0, 0, 82);
         }
         div {
-            border: 1px solid white;
+            border: 1px dotted white;
             position: absolute;
         }
         p {
             color: white;
+            background-color: red;
             margin: -10 -10;
             font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
             position: absolute;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous"></script>
     <body>
-        hoge
     </body>
     <script>
         function createDom(t) {
@@ -49,15 +51,16 @@
                 ltag.innerText = h;
                 d.updateTags();
             }
-            d.posi = function (x, y) {
+            d.posi = function (x, y, c=true) {
                 d.style.left = x + "px";
                 d.style.top = y + "px";
                 d.updateTags();
             }
             d.updateTags = function() {
+                let m = g.divs.length * 30;
                 ttag.style.top = d.top();
-                ttag.style.left = d.left() + d.width() / 2;
-                ltag.style.top = d.top() + d.height() / 2;
+                ttag.style.left = d.left() + d.width() / 2 + m;
+                ltag.style.top = d.top() + d.height() / 2 + m;
                 ltag.style.left = d.left() + d.width();
             }
             document.body.append(d);
@@ -67,9 +70,22 @@
             return d;
         }
         function init() {
-            let d = createBox();
-            d.resize(320, 860);
-            d.posi(100, 100);
+            // window size
+            let b1 = createBox();
+            let w = 320;
+            let h = 860;
+            b1.resize(w, h);
+            b1.posi(100, 100);
+            // margin 1
+            let b2 = createBox();
+            let m1 = 10;
+            b2.resize(w + m1, h + m1);
+            b2.posi(100 - m1 / 2, 100 - m1 / 2);
+            // margin 2
+            let b3 = createBox();
+            let m2 = 20;
+            b3.resize(w + m2, h + m2);
+            b3.posi(100 - m2 / 2, 100 - m2 / 2);
         }
         init();
     </script>
